@@ -16,8 +16,9 @@ export function ImageCard({ url, alt, name, variants }: { url: string, alt: stri
 
     const [copiedText, copyToClipboard] = useCopyToClipboard();
     let updatedVariants = [
-        ...variants, 
-        { name: "dynamic", url: variants[0].replace('/public', '') }
+        { name: "Copy ID", url: variants[0].split('/')[4] },
+        { name: "dynamic", url: variants[0].replace('/public', '') },
+        ...variants,
     ];
 
     let variantItems = updatedVariants.map((variant, index) => {
