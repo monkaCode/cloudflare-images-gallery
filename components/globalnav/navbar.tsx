@@ -9,8 +9,6 @@ import NextLink from "next/link";
 import { ThemeSwitch } from "./theme-switch";
 import {CloudIcon} from "@/components/globalnav/icons";
 
-import Image from 'next/image';
-
 export const Navbar = ({
   title,
   icon,
@@ -27,7 +25,7 @@ export const Navbar = ({
           <NextLink className="flex justify-start items-center gap-1" href={link ?? '/'}>
             {icon ? (
               typeof icon === 'string' ? (
-                <Image src={icon} alt={`${title} logo`} width={30} height={30} />
+                <img src={icon} alt={`${title} logo`} />
               ) : (
                 icon
               )
