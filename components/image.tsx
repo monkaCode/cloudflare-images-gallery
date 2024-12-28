@@ -15,20 +15,31 @@ import {
 export function ImageCard({ url, alt, name, variants }: { url: string, alt: string, name: string, variants: string[]}) {
 
     const [copiedText, copyToClipboard] = useCopyToClipboard();
+    let updatedVariants = [
+        ...variants, 
+        { name: "dynamic", url: variants[0].replace('/public', '') }
+    ];
 
-    let variantItems = variants.map((variant, index) => {
+    let variantItems = updatedVariants.map((variant, index) => {
+        const isDynamic = typeof variant === "object";
+        const variantLabel = isDynamic ? variant.name : String(variant).split('/').pop();
+        const variantUrl = isDynamic ? variant.url : variant;
+    
         return (
-            <DropdownItem key={index} onPress={() => copyToClipboard(variant).then(success => {
-                if (success) {
-                    toast.success("URL copied to clipboard");
-                } else {
-                    toast.error("Failed to copy variant URL to clipboard");
-                }
-            })}>
-                {String(variant).split('/').pop()}
+            <DropdownItem 
+                key={index} 
+                onPress={() => copyToClipboard(variantUrl).then(success => {
+                    if (success) {
+                        toast.success("URL copied to clipboard");
+                    } else {
+                        toast.error("Failed to copy variant URL to clipboard");
+                    }
+                })}
+            >
+                {variantLabel}
             </DropdownItem>
-        )
-    })
+        );
+    });
 
     return (
         <Dropdown>
