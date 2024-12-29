@@ -38,7 +38,7 @@ export default function ImageList() {
                     <span style={{ color: 'white' }}>Loading</span>
               </div>
             ) : (
-                images.map((image: CfImage) => (
+                images?.map((image: CfImage) => (
                     <ImageCard
                         key={image.id}
                         url={image.variants[0]}
