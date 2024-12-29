@@ -42,7 +42,7 @@ export default function ImageList({search}: {search: string}) {
                 images?.map((image) => { return {...image, name: image.meta?.name ?? image.filename.split('.')[0].replace('_', ' ')} }).filter((img) => {
                     return img.name.toLowerCase().includes(search.toLowerCase())
                 }).slice((page-1)*50, page*50).map((image: CfImage) => (
-                    <ImageCard image={image} />
+                    <ImageCard key={image.id} image={image} />
                 ))
             )}
         </div>
