@@ -1,4 +1,5 @@
 'use server';
+import dotenv from 'dotenv';
 
 export type CfImage = {
     id: string,
@@ -9,6 +10,7 @@ export type CfImage = {
 }
 
 export async function getImages(): Promise<CfImage[]> {
+    dotenv.config();
     try {
         const res = await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT_ID}/images/v1`, {
             method: 'GET',
