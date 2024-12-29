@@ -10,6 +10,7 @@ import { UserContext } from "@/app/providers/UserProvider";
 import { Input, ModalBody } from "@nextui-org/react";
 import { FaPlus, FaSearch } from "react-icons/fa";
 import { Modal, ModalContent, ModalHeader, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import { toast } from "sonner";
 
 export const Navbar = ({title, icon, link, setSearch}: {title: string; icon?: React.ReactNode | string; link?: string; setSearch: (search: string) => void;}) => {
 	const user: UserData | undefined = useContext(UserContext);
@@ -25,6 +26,10 @@ export const Navbar = ({title, icon, link, setSearch}: {title: string; icon?: Re
 			const image = await uploadImage(imageUrl, imageName);
 			if (image) {
 				setUploading(false);
+				toast.success('Image uploaded successfully');
+			} else {
+				setUploading(false);
+				toast.error('Failed to upload image');
 			}
 		} catch (error) {
 			console.error('Failed to upload image:', error);
