@@ -18,7 +18,7 @@ export function ImageCard({ image }: { image: CfImage}) {
 	const user: UserData | undefined = useContext(UserContext);
     const [_, copyToClipboard] = useCopyToClipboard();
     const options: Variant[]  = [{ name: "Copy ID", url: image.id }];
-    if (user?.correspondent === 'monka') {
+    if (user?.correspondent === 'monka' || process.env.NODE_ENV === 'development') {
         options.push({ name: "Delete", url: "delete" });
     }
 
@@ -40,7 +40,8 @@ export function ImageCard({ image }: { image: CfImage}) {
             <DropdownItem 
                 key={index} 
                 onPress={() => {
-                    if (option.url === 'delte') {
+                    console.log(option.url);
+                    if (option.url === 'delete') {
                         handleDelete();
                     } else {
                         copyToClipboard(option.url).then(success => {
