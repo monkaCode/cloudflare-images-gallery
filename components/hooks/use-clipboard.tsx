@@ -1,5 +1,5 @@
-'use client'
-import { useCallback, useState } from 'react'
+'use client';
+import { useCallback, useState } from 'react';
 
 type CopiedValue = string | null
 

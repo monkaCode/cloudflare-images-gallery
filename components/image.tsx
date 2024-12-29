@@ -1,5 +1,4 @@
-'use client'
-
+'use client';
 import {Image} from "@nextui-org/image";
 import {Card, CardBody, CardFooter} from "@nextui-org/card";
 import {toast} from "sonner";
@@ -8,7 +7,6 @@ import {
     Dropdown,
     DropdownTrigger,
     DropdownMenu,
-    DropdownSection,
     DropdownItem
 } from "@nextui-org/dropdown";
 
@@ -62,9 +60,7 @@ export function ImageCard({ url, alt, name, variants }: { url: string, alt: stri
                 </Card>
             </DropdownTrigger>
             <DropdownMenu aria-label="Variants" items={variants}>
-
-                    {...variantItems}
-
+                {...variantItems}
             </DropdownMenu>
         </Dropdown>
 
