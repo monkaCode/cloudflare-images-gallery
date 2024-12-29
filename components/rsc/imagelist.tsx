@@ -1,12 +1,13 @@
 'use client';
-import { CfImage, getImages } from "@/app/actions/getImages";
+import { CfImage, getImages } from "@/app/actions/imageActions";
 import {ImageCard} from "@/components/image";
 import { useEffect, useState } from "react";
 import { ColorRing } from "react-loader-spinner";
 
-export default function ImageList() {
+export default function ImageList({search}: {search: string}) {
     const [images, setImages] = useState<CfImage[]>([]);
     const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         const fetchImages = async () => {
@@ -22,7 +23,7 @@ export default function ImageList() {
         fetchImages();
     }, []);
 
-    return (
+    return (<>
         <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {loading ? (
                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
@@ -38,17 +39,28 @@ export default function ImageList() {
                     <span style={{ color: 'white' }}>Loading</span>
               </div>
             ) : (
-                images?.map((image: CfImage) => (
-                    <ImageCard
-                        key={image.id}
-                        url={image.variants[0]}
-                        alt={image.id}
-                        name={image.filename}
-                        variants={image.variants}
-                    />
+                images?.map((image) => { return {...image, name: image.meta?.name ?? image.filename.split('.')[0].replace('_', ' ')} }).filter((img) => {
+                    return img.name.toLowerCase().includes(search.toLowerCase())
+                }).slice((page-1)*50, page*50).map((image: CfImage) => (
+                    <ImageCard image={image} />
                 ))
             )}
         </div>
-    );
-
+        <div style={{ display: "flex", flexDirection: "row", justifyContent: "end", width: '100%', alignContent: 'center', position: 'fixed', bottom: 10, right: 10 }}>
+            <button
+                onClick={() => setPage((prevPage) => Math.max(prevPage - 1, 1))}
+                disabled={page === 1}
+                className="px-4 py-2 mx-2 bg-gray-300 text-gray-700 rounded disabled:opacity-50"
+            >
+                Previous
+            </button>
+            <button
+                onClick={() => setPage((prevPage) => prevPage + 1)}
+                disabled={images.length < 50}
+                className="px-4 py-2 mx-2 bg-gray-300 text-gray-700 rounded disabled:opacity-50"
+            >
+                Next
+            </button>
+        </div>
+    </>);
 }
