@@ -39,7 +39,7 @@ export default function ImageList({search}: {search: string}) {
                     <span style={{ color: 'white' }}>Loading</span>
               </div>
             ) : (
-                images?.map((image) => { return {...image, name: image.meta?.name ?? image.filename.split('.')[0].replace('_', ' ')} }).filter((img) => {
+                images.filter(i => i.creator !== "opsyra")?.map((image) => { return {...image, name: image.meta?.name ?? image.filename.split('.')[0].replace('_', ' ')} }).filter((img) => {
                     return img.name.toLowerCase().includes(search.toLowerCase())
                 }).slice((page-1)*50, page*50).map((image: CfImage) => (
                     <ImageCard key={image.id} image={image} />

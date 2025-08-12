@@ -5,6 +5,7 @@ export type CfImage = {
     id: string,
     name?: string,
     filename: string,
+    creator?: string,
     uploaded: string,
     requireSignedURLs: boolean,
     variants: string[],
