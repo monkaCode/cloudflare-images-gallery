@@ -16,7 +16,7 @@ dotenv.config();
 
 export async function getImages(): Promise<CfImage[]> {
     try {
-        const res = await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT_ID}/images/v1`, {
+        const res = await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT_ID}/images/v2?per_page=10000`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${process.env.CF_API_TOKEN}`,
